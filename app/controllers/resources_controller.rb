@@ -29,7 +29,7 @@ class ResourcesController < ApplicationController
   def destroy
     @resource.destroy
     respond_to do |format|
-      format.html { redirect_to host_resources_path(@resource.host), notice: 'Resource was successfully destroyed.' }
+      format.html { redirect_to @resource.host, notice: 'Resource was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -19,12 +19,16 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe ResourcesController, type: :controller do
+  let(:host) { Host.create name: "Xyz" }
+  before :each do
+    allow_any_instance_of(Resource).to receive(:check!)
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Resource. As you add validations to Resource, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { url: "http://example.com", host_id: host.id }
   }
 
   let(:invalid_attributes) {
@@ -39,7 +43,7 @@ RSpec.describe ResourcesController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested resource as @resource" do
       resource = Resource.create! valid_attributes
-      get :edit, {:id => resource.to_param}, valid_session
+      get :edit, {:id => resource.to_param, host_id: host.id}, valid_session
       expect(assigns(:resource)).to eq(resource)
     end
   end
@@ -52,34 +56,34 @@ RSpec.describe ResourcesController, type: :controller do
 
       it "updates the requested resource" do
         resource = Resource.create! valid_attributes
-        put :update, {:id => resource.to_param, :resource => new_attributes}, valid_session
+        put :update, {:id => resource.to_param, :resource => new_attributes, host_id: host.id}, valid_session
         resource.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested resource as @resource" do
         resource = Resource.create! valid_attributes
-        put :update, {:id => resource.to_param, :resource => valid_attributes}, valid_session
+        put :update, {:id => resource.to_param, :resource => valid_attributes, host_id: host.id}, valid_session
         expect(assigns(:resource)).to eq(resource)
       end
 
       it "redirects to the resource" do
         resource = Resource.create! valid_attributes
-        put :update, {:id => resource.to_param, :resource => valid_attributes}, valid_session
-        expect(response).to redirect_to(resource)
+        put :update, {:id => resource.to_param, :resource => valid_attributes, host_id: host.id}, valid_session
+        expect(response).to redirect_to(host)
       end
     end
 
     context "with invalid params" do
       it "assigns the resource as @resource" do
         resource = Resource.create! valid_attributes
-        put :update, {:id => resource.to_param, :resource => invalid_attributes}, valid_session
+        put :update, {:id => resource.to_param, :resource => invalid_attributes, host_id: host.id}, valid_session
         expect(assigns(:resource)).to eq(resource)
       end
 
       it "re-renders the 'edit' template" do
         resource = Resource.create! valid_attributes
-        put :update, {:id => resource.to_param, :resource => invalid_attributes}, valid_session
+        put :update, {:id => resource.to_param, :resource => invalid_attributes, host_id: host.id}, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -89,14 +93,14 @@ RSpec.describe ResourcesController, type: :controller do
     it "destroys the requested resource" do
       resource = Resource.create! valid_attributes
       expect {
-        delete :destroy, {:id => resource.to_param}, valid_session
+        delete :destroy, {:id => resource.to_param, host_id: host.id}, valid_session
       }.to change(Resource, :count).by(-1)
     end
 
     it "redirects to the resources list" do
       resource = Resource.create! valid_attributes
-      delete :destroy, {:id => resource.to_param}, valid_session
-      expect(response).to redirect_to(resources_url)
+      delete :destroy, {:id => resource.to_param, host_id: host.id}, valid_session
+      expect(response).to redirect_to(host)
     end
   end
 

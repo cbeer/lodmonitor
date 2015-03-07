@@ -6,6 +6,7 @@ class Check::Parseable < Check
 
     it "should be an rdf graph" do
       expect(graph).to be_a_kind_of(RDF::Graph)
+      expect(graph).not_to be_blank
     end
 
     it "should not contain (X)HTML predicates" do
@@ -15,7 +16,7 @@ class Check::Parseable < Check
   end
 
   def group
-    RSpec.describe resource do
+    describe_resource do
       it_behaves_like "a parseable graph"
     end
   end
