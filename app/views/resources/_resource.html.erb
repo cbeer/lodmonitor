@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= resource.url %>
+    <small>
+      <%= link_to 'Edit', edit_host_resource_path(resource.host, resource) %>
+
+      <%= link_to content_tag('span', '', class: 'glyphicon glyphicon-repeat pull-right'), check_host_resource_path(resource.host, resource), method: :post %>      
+    </small>
+  </div>
+
+  <div class="panel-body">
+    <%= render collection: resource.checks, partial: 'resources/check' %>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<%= form_for(@host, class: "form") do |f| %>
+  <% if @host.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@host.errors.count, "error") %> prohibited this host from being saved:</h2>
+
+      <ul>
+      <% @host.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="form-group resources">
+    <h3>Resources</h3>
+    <% additional_resource = f.fields_for(:resources, [Resource.new]) do |r| %>
+      <div class="form-group">
+        <%= r.label :url, class: 'sr-only' %>
+        <%= r.text_field :url, class: 'form-control' %>
+      </div>
+    <% end %>
+
+    <%= f.fields_for :resources do |r| %>
+      <div class="form-group">
+        <%= r.hidden_field :id if r.object.persisted? %>
+        <%= r.label :url, class: 'sr-only' %>
+        <%= r.text_field :url, class: 'form-control' %>
+      </div>
+    <% end %>
+    <%= link_to "+ Add", "#", class: 'add-resource btn btn-success', data: { resource: additional_resource.to_json } %>
+   </div>
+
+  
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+    
+    <%= link_to 'Destroy', @host, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+  </div>
+<% end %>

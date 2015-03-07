@@ -1,0 +1,12 @@
+<div>
+<%= t check.type %>
+<% if check.success? %>
+<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+<% else %>
+<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+<pre>
+<%= check.out %>
+</pre>
+<% end %>
+</div>

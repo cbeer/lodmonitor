@@ -1,0 +1,12 @@
+<% if notice %>
+<p id="notice" class="alert alert-info"><%= notice %></p>
+<% end %>
+
+<%= link_to 'New Host', new_host_path, class: "btn btn-default pull-right" %>
+
+<h1>Monitored Hosts</h1>
+
+
+<% @hosts.each do |host| %>
+  <h2><%= link_to host.name, host %></h2>
+<% end %>

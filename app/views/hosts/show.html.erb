@@ -1,0 +1,14 @@
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<h1><%= @host.name %></h1>
+
+<p>
+  <%= @host.description %>
+</p>
+
+<%= render @host.resources %>
+
+<%= link_to 'Edit', edit_host_path(@host) %> |
+<%= link_to 'Back', hosts_path %>
