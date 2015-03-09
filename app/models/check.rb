@@ -49,7 +49,7 @@ class Check < ActiveRecord::Base
   end
 
   def success?
-    !!self.status
+    !data[:failures].present?
   end
 
   protected
