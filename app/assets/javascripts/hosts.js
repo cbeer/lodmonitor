@@ -1,4 +1,4 @@
-$(function() {
+$(document).on('page:change', function() {
   $('.add-resource').on('click', function(event) {
     event.preventDefault();
 
