@@ -54,5 +54,4 @@ gem 'rest-client'
 gem 'devise'
 gem 'cancancan'
 gem 'bootstrap-sass'
-
-
+gem 'whenever'
