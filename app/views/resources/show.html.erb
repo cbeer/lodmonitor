@@ -1,0 +1,10 @@
+<h1><%= @resource.url %></h1>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= render collection: @resource.checks, partial: 'resources/check' %>
+  </div>
+</div>
+
+<hr />
+
+<%= render 'dashboards/one_off_form', resource: Resource.new(url: @resource.url) %>

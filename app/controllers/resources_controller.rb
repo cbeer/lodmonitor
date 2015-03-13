@@ -1,5 +1,5 @@
 class ResourcesController < ApplicationController
-  before_action :set_resource
+  before_action :set_resource, except: :create
 
   def check
     @resource.check!
@@ -8,6 +8,20 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
+  end
+
+  # POST /resources
+  def create
+    @resource = Resource.new(resource_params)
+
+    respond_to do |format|
+      if @resource.save
+        @resource.check!
+        format.html { render :show }
+      else
+        format.html { redirect_to root_url, notice: "Unable to check resource" }
+      end
+    end
   end
 
   # PATCH/PUT /resources/1

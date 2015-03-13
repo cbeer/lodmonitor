@@ -1,0 +1,9 @@
+<%= form_for(resource, class: "form") do |f| %>
+
+  <div class="input-group">
+    <%= f.text_field :url, class: 'form-control' %>
+    <span class="input-group-btn">
+      <%= f.submit "Test URL", class: 'btn btn-primary'%>
+    </span>
+  </div>
+<% end %>
