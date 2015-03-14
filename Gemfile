@@ -50,7 +50,8 @@ end
 gem 'rspec-core'
 gem 'rspec-expectations'
 gem 'linkeddata'
-gem 'rest-client'
+gem 'rest-client' # ruby-rdf uses rest-client, if available. 
+gem 'faraday'
 gem 'devise'
 gem 'cancancan'
 gem 'bootstrap-sass'

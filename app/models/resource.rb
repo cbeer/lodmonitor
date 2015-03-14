@@ -5,14 +5,16 @@ class Resource < ActiveRecord::Base
   validates_presence_of :url
 
   after_create do
-    Check::Parseable.create resource: self
+    check!
   end
 
   def check!
     (Check.default_classes - self.checks.map(&:class)).each do |c|
-      c.create(resource: self)
+      c.create!(resource: self)
     end
 
     self.checks.each { |c| c.check! }
+
+    self.reload
   end
 end
