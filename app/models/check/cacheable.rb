@@ -1,7 +1,12 @@
 class Check::Cacheable < Check
 
   RSpec.shared_examples "a cacheable service" do
-    let(:conn) { Faraday.new(url: subject.url) }
+    let(:conn) do
+      Faraday.new(url: subject.url) do |b|
+        b.use FaradayMiddleware::FollowRedirects
+        b.adapter :net_http
+      end
+    end
 
     let(:headers) { conn.get.headers }
 

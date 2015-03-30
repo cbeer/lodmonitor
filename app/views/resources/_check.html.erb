@@ -1,12 +1,29 @@
-<div>
-<%= t check.type %>
-<% if check.success? %>
-<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-<% else %>
-<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+<div class="panel panel-<%= check.success? ? "success" : "danger" %>">
+  <div class="panel-heading">
+    <h2 class="panel-title">
+      <small class="pull-right">
+      <% if check.success? %>
+      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+      <% else %>
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      <% end %>
+      </small>
 
-<pre>
-<%= check.out %>
-</pre>
-<% end %>
+      <%= t check.type %>
+    </h2>
+  </div>
+
+  <div class="panel-body">
+  <% unless check.success? %>
+    <h3>Failures</h3>
+    <pre>
+    <%= check.out.strip %>
+    </pre>
+
+    <h3>HTTP Log</h3>
+    <pre>
+    <%= check.stored_http_log.strip %>
+    </pre>
+  <% end %>
+  </div>
 </div>

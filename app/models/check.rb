@@ -1,3 +1,5 @@
+require 'http_logger'
+
 class Check < ActiveRecord::Base
   belongs_to :resource
 
@@ -40,11 +42,16 @@ class Check < ActiveRecord::Base
     data[:failures].join("\n")
   end
 
+  def stored_http_log
+    data[:http_log]
+  end
+
   def check!
     results = run
     self.status = results.status
     self.data = {}
     self.data[:failures] = results.failures.map { |x| x.full_description.gsub(/^#<[^>]+> /, "it ")}
+    self.data[:http_log] = self.http_log.string
     save
   end
 
@@ -52,8 +59,24 @@ class Check < ActiveRecord::Base
     !data[:failures].present?
   end
 
+  def http_log
+    @http_log ||= StringIO.new
+  end
+
   protected
-  def describe_resource &block
-    RSpec::Core::ExampleGroup.__send__("describe", resource, &block)
+  def describe_resource &block    
+    HttpLogger.logger = Logger.new(http_log)
+    HttpLogger.log_headers = true
+    HttpLogger.colorize = false
+
+    RSpec::Core::ExampleGroup.__send__("describe", resource) do
+      before(:each) do |example|
+        HttpLogger.logger.warn("#" * 40)
+        HttpLogger.logger.warn(example.description)
+        HttpLogger.logger.warn("-" * 40)
+      end
+
+      instance_eval(&block)
+    end
   end
 end

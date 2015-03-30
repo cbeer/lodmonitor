@@ -47,11 +47,13 @@ group :development, :test do
   gem 'poltergeist'
 end
 
+gem 'http_logger'
 gem 'rspec-core'
 gem 'rspec-expectations'
 gem 'linkeddata'
 gem 'rest-client' # ruby-rdf uses rest-client, if available. 
 gem 'faraday'
+gem 'faraday_middleware'
 gem 'devise'
 gem 'cancancan'
 gem 'bootstrap-sass'
