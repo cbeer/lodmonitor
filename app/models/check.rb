@@ -35,11 +35,15 @@ class Check < ActiveRecord::Base
       group.run(reporter)
     end
 
-    Struct.new(:status, :failures).new(result, reporter.failed_examples)
+    Struct.new(:status, :failures, :successes).new(result, reporter.failed_examples, reporter.examples.select { |x| x.metadata[:execution_result].status == :passed })
   end
   
-  def out
-    data[:failures].join("\n")
+  def failures
+    data[:failures]
+  end
+
+  def successes
+    data[:successes]
   end
 
   def stored_http_log
@@ -50,7 +54,20 @@ class Check < ActiveRecord::Base
     results = run
     self.status = results.status
     self.data = {}
-    self.data[:failures] = results.failures.map { |x| x.full_description.gsub(/^#<[^>]+> /, "it ")}
+
+    self.data[:failures] = results.failures.map do |x| 
+      {
+        description: x.full_description.gsub(/^#<[^>]+> /, "it "),
+        exception: x.exception.to_s,
+      }
+    end
+    
+    self.data[:successes] = results.successes.map do |x| 
+      {
+        description: x.full_description.gsub(/^#<[^>]+> /, "it "),
+      }
+    end
+
     self.data[:http_log] = self.http_log.string
     save
   end
