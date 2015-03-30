@@ -8,7 +8,7 @@ class Check < ActiveRecord::Base
   serialize :data, Hash
 
   def self.default_classes
-    @default_classes ||= [Check::Parseable, Check::Cacheable, Check::Conneg]
+    @default_classes ||= [Check::Parseable, Check::Cacheable, Check::ContentNegotiable]
   end
 
   def reporter_config

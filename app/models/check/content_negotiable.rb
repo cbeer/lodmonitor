@@ -1,9 +1,9 @@
-class Check::Conneg < Check
+class Check::ContentNegotiable < Check
 
   RSpec.shared_examples "a content-negotiable service" do
     let(:conn) { Faraday.new(url: subject.url) }
 
-    it "should have an HTML description of the resource" do
+    it "has an HTML description of the resource" do
       resp = conn.get do |req|
         req.headers['Accept'] = "application/xhtml+xml,text/html"
       end
