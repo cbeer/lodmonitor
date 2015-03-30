@@ -1,2 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.http-log {
+  height: 200px;
+  overflow-y: scroll;
+}

@@ -12,18 +12,13 @@
       <%= t check.type %>
     </h2>
   </div>
-
-  <div class="panel-body">
   <% unless check.success? %>
+  <div class="panel-body">
     <h3>Failures</h3>
-    <pre>
-    <%= check.out.strip %>
-    </pre>
+    <pre><%= check.out.strip %></pre>
 
     <h3>HTTP Log</h3>
-    <pre>
-    <%= check.stored_http_log.strip %>
-    </pre>
-  <% end %>
+    <pre class="http-log"><%= check.stored_http_log.strip %></pre>
   </div>
+  <% end %>
 </div>
