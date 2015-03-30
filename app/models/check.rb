@@ -83,6 +83,9 @@ class Check < ActiveRecord::Base
   protected
   def describe_resource &block    
     HttpLogger.logger = Logger.new(http_log)
+    HttpLogger.logger.formatter = proc do |severity, datetime, progname, msg|
+      "#{msg}\n"
+    end
     HttpLogger.log_headers = true
     HttpLogger.colorize = false
 

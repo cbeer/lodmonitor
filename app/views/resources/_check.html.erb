@@ -15,24 +15,24 @@
   <% unless check.success? %>
   <div class="panel-body">
     <% if check.successes.any? %>
-      <h3>Passed</h3>
+      <h3 class="sr-only">Passed</h3>
       <% check.successes.each do |c| %>
-      <div class="alert alert-success">
-        <strong><%= c[:description] %></strong>
+      <div class="alert alert-success alert-outline">
+        <strong><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <%= c[:description] %></strong>
       </div>
       <% end %>
     <% end %>
 
-    <h3>Failures</h3>
+    <h3 class="sr-only">Failures</h3>
     
     <% check.failures.each do |c| %>
-      <div class="alert alert-danger">
-        <strong><%= c[:description] %></strong><br />
-        <pre><%= c[:exception] %></pre>
+      <div class="alert alert-danger alert-outline">
+        <strong><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <%= c[:description] %></strong><br />
+        <pre class="failure-exception"><%= c[:exception] %></pre>
       </div>
     <% end %>
 
-    <h3>HTTP Log</h3>
+    <h3 class="sr-only">HTTP Log</h3>
     <pre class="http-log"><%= check.stored_http_log.strip %></pre>
   </div>
   <% end %>
