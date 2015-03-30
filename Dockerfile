@@ -15,9 +15,11 @@ ADD . /home/app/webapp
 WORKDIR /home/app/webapp
 
 RUN bundle install --deployment
-RUN rake db:migrate
 RUN chown app -R /home/app/webapp/log /home/app/webapp/db
 RUN chmod u+wr -R /home/app/webapp/log /home/app/webapp/db
+
+ADD bootstrap-db.sh /etc/my_init.d/bootstrap-db.sh
+RUN chmod o+x /etc/my_init.d/bootstrap-db.sh
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
