@@ -17,8 +17,7 @@ WORKDIR /home/app/webapp
 RUN bundle install --deployment
 RUN rake db:migrate
 RUN chown app -R /home/app/webapp/log /home/app/webapp/db
-RUN chmod 600 /home/app/webapp/log/production.log
-RUN chmod 600 /home/app/webapp/db/production.sqlite3
+RUN chmod u+wr -R /home/app/webapp/log /home/app/webapp/db
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
