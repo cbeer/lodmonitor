@@ -29,7 +29,20 @@
       <div class="alert alert-danger alert-outline">
         <strong><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <%= c[:description] %></strong><br />
         <pre class="failure-exception"><%= c[:exception] %></pre>
-        <pre class="http-log failure-exception"><%= check.http_requests_by_test.find { |k, v| c[:description].include? k }.last.strip rescue "" %></pre>
+        <% check.http_requests_by_test.find { |k, v| c[:description].include? k }.last.each do |k, request| %>
+          <div class="request-box">
+            <div class="request alert-info">
+              <h4><%= k %> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></h4>
+              <pre><%= request[:request][:headers] %></pre>
+            </div>
+            
+            <div class="response alert-warning">
+              <h4><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> <%= request[:response][:status] %></h4>
+              <pre><%= request[:response][:headers] %></pre>
+              <pre class="http-log"><%= request[:response][:body] %></pre>
+            </div>
+          </div>
+        <% end %>
       
       </div>
     <% end %>

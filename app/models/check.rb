@@ -59,9 +59,23 @@ class Check < ActiveRecord::Base
         next if test.blank?
         _ = lines.shift
         request = lines.join("\n")
-        hash[test] = request
+        hash[test] = munge_http_request(request)
       end
     end  
+  end
+
+  def munge_http_request request
+    requests = Hash[*request.split(/(^HTTP GET \([^)]+\).*)/).reject(&:blank?)]
+
+    requests.each do |k,v|
+      lines = v.split("\n")
+      h = { request: {}, response: {} }
+      h[:request][:headers] = lines.select { |x| x =~ /^HTTP request header/}.join("\n").gsub(/HTTP request header\s+/, "")
+      h[:response][:status] = lines.select { |x| x =~ /^Response status/}.join("\n").gsub(/Response status\s+/, "")
+      h[:response][:headers] = lines.select { |x| x =~ /^HTTP response header/}.join("\n").gsub(/HTTP response header\s+/, "")
+      h[:response][:body] = lines.drop_while { |x| x !~ /^Response body/ }.join("\n").gsub(/Response body\s+/, "")
+      requests[k] = h
+    end
   end
 
   def check!
