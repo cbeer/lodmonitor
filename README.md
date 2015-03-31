@@ -2,7 +2,7 @@
 
 LODMonitor is a service that monitors the health and availability of linked open data resources.
 
-![screen shot 2015-03-30 at 3 15 39 pm](https://cloud.githubusercontent.com/assets/111218/6908050/b848e92c-d6ef-11e4-86db-b1b13b0c1eee.png)
+![screen shot 2015-03-31 at 10 16 43 am](https://cloud.githubusercontent.com/assets/111218/6924689/1800b940-d78f-11e4-81ab-62ec039ad505.png)
 
 ## Install
 
