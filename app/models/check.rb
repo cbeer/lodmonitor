@@ -50,6 +50,20 @@ class Check < ActiveRecord::Base
     data[:http_log]
   end
 
+  def http_requests_by_test
+    @http_requests ||= begin
+      tests = stored_http_log.split(/#{"#" * 40}\n/)
+      tests.each_with_object({}) do |t, hash|
+        lines = t.split("\n")
+        test = lines.shift
+        next if test.blank?
+        _ = lines.shift
+        request = lines.join("\n")
+        hash[test] = request
+      end
+    end  
+  end
+
   def check!
     results = run
     self.status = results.status

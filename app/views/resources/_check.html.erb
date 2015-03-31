@@ -29,11 +29,10 @@
       <div class="alert alert-danger alert-outline">
         <strong><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <%= c[:description] %></strong><br />
         <pre class="failure-exception"><%= c[:exception] %></pre>
+        <pre class="http-log failure-exception"><%= check.http_requests_by_test.find { |k, v| c[:description].include? k }.last.strip rescue "" %></pre>
+      
       </div>
     <% end %>
-
-    <h3 class="sr-only">HTTP Log</h3>
-    <pre class="http-log"><%= check.stored_http_log.strip %></pre>
   </div>
   <% end %>
 </div>
