@@ -38,7 +38,7 @@ class Check::ContentNegotiable < Check
 
   def group
     describe_resource do
-      it_behaves_like "a content-negotiable service"
+      include_examples "a content-negotiable service"
     end
   end
 end

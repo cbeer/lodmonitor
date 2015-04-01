@@ -27,7 +27,7 @@ class Check::Cacheable < Check
 
   def group
     describe_resource do
-      it_behaves_like "a cacheable service"
+      include_examples "a cacheable service"
     end
   end
 end

@@ -1,7 +1,7 @@
 class Check::Parseable < Check
   XHTML_STYLESHEET = RDF::Resource.new("http://www.w3.org/1999/xhtml/vocab#stylesheet")
 
-  RSpec.shared_examples "a RDF graph" do
+  RSpec.shared_examples "a parseable graph" do
     let(:graph) { RDF::Graph.load(subject.url) }
 
     it "has a RDF graph" do
@@ -17,7 +17,7 @@ class Check::Parseable < Check
 
   def group
     describe_resource do
-      it_behaves_like "a RDF graph"
+      include_examples "a parseable graph"
     end
   end
 end
