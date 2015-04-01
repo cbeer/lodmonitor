@@ -96,7 +96,7 @@ class Check < ActiveRecord::Base
       }
     end
 
-    self.data[:http_log] = self.http_log.string
+    self.data[:http_log] = self.http_log.string.scrub
     save
   end
 
