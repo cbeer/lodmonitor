@@ -9,5 +9,7 @@ Rails.application.routes.draw do
 
   resources :resources, only: [:create]
 
+  get 'resources' => 'resources#show'
+
   root to: 'dashboards#index'
 end

@@ -1,5 +1,5 @@
 class ResourcesController < ApplicationController
-  before_action :set_resource, except: :create
+  before_action :set_resource, except: [:create, :show]
 
   def check
     @resource.check!
@@ -10,8 +10,8 @@ class ResourcesController < ApplicationController
   def edit
   end
 
-  # POST /resources
-  def create
+  # GET /resources?resource[url]=http... | POST /resources
+  def show
     @resource = Resource.new(resource_params)
 
     respond_to do |format|
@@ -23,6 +23,8 @@ class ResourcesController < ApplicationController
       end
     end
   end
+  
+  alias_method :create, :show
 
   # PATCH/PUT /resources/1
   # PATCH/PUT /resources/1.json
