@@ -7,7 +7,7 @@ RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
 
 ADD webapp.conf /etc/nginx/sites-enabled/default
-ADD secret_key.conf /etc/nginx/main.d/secret_key.conf
+ADD webapp_env.conf /etc/nginx/main.d/webapp_env.conf
 
 RUN mkdir /home/app/webapp
 ADD . /home/app/webapp
